@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* USART Init Structure definition */
 typedef struct

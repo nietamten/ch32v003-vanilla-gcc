@@ -17,16 +17,17 @@
 extern "C" {
 #endif
 
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* Output Maximum frequency selection */
+/*
 typedef enum
 {
     GPIO_Speed_10MHz = 1,
     GPIO_Speed_2MHz,
     GPIO_Speed_50MHz
 } GPIOSpeed_TypeDef;
-
+*/
 /* Configuration Mode enumeration */
 typedef enum
 {
@@ -54,12 +55,13 @@ typedef struct
 } GPIO_InitTypeDef;
 
 /* Bit_SET and Bit_RESET enumeration */
+/*
 typedef enum
 {
     Bit_RESET = 0,
     Bit_SET
 } BitAction;
-
+*/
 /* GPIO_pins_define */
 #define GPIO_Pin_0                     ((uint16_t)0x0001) /* Pin 0 selected */
 #define GPIO_Pin_1                     ((uint16_t)0x0002) /* Pin 1 selected */

@@ -17,23 +17,25 @@
 extern "C" {
 #endif
 
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* EXTI mode enumeration */
+/*
 typedef enum
 {
     EXTI_Mode_Interrupt = 0x00,
     EXTI_Mode_Event = 0x04
 } EXTIMode_TypeDef;
-
+*/
 /* EXTI Trigger enumeration */
+/*
 typedef enum
 {
     EXTI_Trigger_Rising = 0x08,
     EXTI_Trigger_Falling = 0x0C,
     EXTI_Trigger_Rising_Falling = 0x10
 } EXTITrigger_TypeDef;
-
+*/
 /* EXTI Init Structure definition */
 typedef struct
 {

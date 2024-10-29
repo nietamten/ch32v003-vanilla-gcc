@@ -17,7 +17,9 @@
  extern "C" {
 #endif
 
-#include <ch32v00x.h>
+//#include <ch32v00x.h>
+#include <ch32v003fun.h>
+
 #include <stdio.h>
 
 /* UART Printf Definition */
@@ -29,10 +31,11 @@
 #endif
 
 void Delay_Init(void);
+/*
 void Delay_Us(uint32_t n);
 void Delay_Ms(uint32_t n);
 void USART_Printf_Init(uint32_t baudrate);
-
+*/
 #ifdef __cplusplus
 }
 #endif

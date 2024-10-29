@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* WWDG_Prescaler */
 #define WWDG_Prescaler_1    ((uint32_t)0x00000000)

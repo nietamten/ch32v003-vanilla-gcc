@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* IWDG_WriteAccess */
 #define IWDG_WriteAccess_Enable     ((uint16_t)0x5555)

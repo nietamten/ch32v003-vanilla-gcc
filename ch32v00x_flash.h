@@ -17,9 +17,10 @@
 extern "C" {
 #endif
 
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* FLASH Status */
+/*
 typedef enum
 {
     FLASH_BUSY = 1,
@@ -28,6 +29,7 @@ typedef enum
     FLASH_COMPLETE,
     FLASH_TIMEOUT
 } FLASH_Status;
+*/
 
 /* Flash_Latency */
 #define FLASH_Latency_0                  ((uint32_t)0x00000000) /* FLASH Zero Latency cycle */

@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* CFGR0 Register */
 #define DBGMCU_IWDG_STOP             ((uint32_t)0x00000001)

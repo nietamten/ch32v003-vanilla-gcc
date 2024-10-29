@@ -1,0 +1,57 @@
+#riscv64-unknown-elf-gcc -E -P -x c -DTARGET_MCU=CH32V003 -DMCU_PACKAGE= -DTARGET_MCU_LD=0 ../../ch32v003fun/ch32v003fun.ld > ../../ch32v003fun/generated_ch32v003.ld
+#riscv64-unknown-elf-gcc -o blink_raw.elf ../../ch32v003fun/ch32v003fun.c blink_raw.c   -g -Os -flto -ffunction-sections -fdata-sections -fmessage-length=0 -msmall-data-limit=8 -march=rv32ec -mabi=ilp32e -DCH32V003=1 -static-libgcc -I/usr/include/newlib -I../../ch32v003fun/../extralibs -I../../ch32v003fun -nostdlib -I. -Wall  -L../../ch32v003fun/../misc -lgcc -T ../../ch32v003fun/generated_ch32v003.ld -Wl,--gc-sections
+#riscv64-unknown-elf-objdump -S blink_raw.elf > blink_raw.lst
+#riscv64-unknown-elf-objdump -t blink_raw.elf > blink_raw.map
+#riscv64-unknown-elf-objcopy -O binary blink_raw.elf blink_raw.bin
+#riscv64-unknown-elf-objcopy -O ihex blink_raw.elf blink_raw.hex
+#riscv64-unknown-elf-size blink_raw.elf
+#../../ch32v003fun/../minichlink/minichlink -w blink_raw.bin flash -b
+
+
+ldflags = -E -P -x c -DTARGET_MCU=CH32V003 -DMCU_PACKAGE= -DTARGET_MCU_LD=0 
+ldIn = ch32v003fun.ld
+ldOut = generated_ch32v003.ld
+
+rule ld
+ command = riscv64-unknown-elf-gcc $ldflags $in > $out
+
+build $ldOut: ld $ldIn
+
+cflags = -g -Os -flto -ffunction-sections -fdata-sections -fmessage-length=0 -msmall-data-limit=8 -march=rv32ec -mabi=ilp32e -DCH32V003=1 -static-libgcc -nostdlib -Wall -lgcc -Wl,--gc-sections
+
+newlib = /usr/include/newlib
+
+rule ccelf
+  command = riscv64-unknown-elf-gcc $cflags $in ch32v003fun.c -o $out -I. -I$newlib -L. -T generated_ch32v003.ld ch32v00x_rcc.c ch32v00x_gpio.c ch32v00x_misc.c system_ch32v00x.c ch32v00x_adc.c ch32v00x_dbgmcu.c ch32v00x_dma.c ch32v00x_exti.c ch32v00x_flash.c ch32v00x_i2c.c ch32v00x_iwdg.c ch32v00x_opa.c ch32v00x_pwr.c ch32v00x_spi.c ch32v00x_tim.c ch32v00x_usart.c ch32v00x_wwdg.c
+
+build main.elf: ccelf main.c    
+
+rule lst
+  command = riscv64-unknown-elf-objdump -S $in > $out
+
+build main.lst: lst main.elf
+
+rule objdump
+  command = riscv64-unknown-elf-objdump -t $in > $out
+
+build main.map: objdump main.elf
+
+rule objcopy_bin
+  command = riscv64-unknown-elf-objcopy -O binary $in $out
+  
+build main.bin: objcopy_bin main.elf
+
+rule objcopy_hex
+  command = riscv64-unknown-elf-objcopy -O ihex $in $out
+
+build main.hex: objcopy_hex main.elf
+
+rule size_info
+  command = riscv64-unknown-elf-size $in
+
+build info_txt: size_info main.elf
+
+rule flash
+  command  = ./minichlink -w $in flash -b
+  
+build flash_mcu: flash main.bin  

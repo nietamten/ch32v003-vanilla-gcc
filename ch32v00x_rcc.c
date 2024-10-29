@@ -58,10 +58,10 @@
 
 /* BDCTLR register base address */
 #define BDCTLR_ADDRESS             (PERIPH_BASE + BDCTLR_OFFSET)
-
+/*
 static __I uint8_t APBAHBPrescTable[16] = {1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8};
 static __I uint8_t ADCPrescTable[20] = {2, 4, 6, 8, 4, 8, 12, 16, 8, 16, 24, 32, 16, 32, 48, 64, 32, 64, 96, 128};
-
+*/
 /*********************************************************************
  * @fn      RCC_DeInit
  *

@@ -9,7 +9,7 @@
 * Attention: This software (modified or not) and binary are used for 
 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
-#include <ch32v00x.h>
+#include <ch32v003fun.h>
 
 /* 
 * Uncomment the line corresponding to the desired System clock (SYSCLK) frequency (after 
@@ -45,7 +45,7 @@ __I uint8_t AHBPrescTable[16] = {1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8}
 
 
 /* system_private_function_proto_types */
-static void SetSysClock(void);
+//static void SetSysClock(void);
 
 #ifdef SYSCLK_FREQ_8MHz_HSI
   static void SetSysClockTo_8MHz_HSI(void);
@@ -58,7 +58,7 @@ static void SetSysClock(void);
 #elif defined SYSCLK_FREQ_24MHz_HSE
   static void SetSysClockTo_24MHz_HSE(void);
 #elif defined SYSCLK_FREQ_48MHz_HSE
-  static void SetSysClockTo_48MHz_HSE(void);
+//  static void SetSysClockTo_48MHz_HSE(void);
 #endif
 
 
@@ -70,6 +70,7 @@ static void SetSysClock(void);
  *
  * @return  none
  */
+/*
 void SystemInit (void)
 {
   RCC->CTLR |= (uint32_t)0x00000001;
@@ -81,7 +82,7 @@ void SystemInit (void)
 
   SetSysClock();
 }
-
+*/
 
 /*********************************************************************
  * @fn      SystemCoreClockUpdate
@@ -121,7 +122,7 @@ void SystemCoreClockUpdate (void)
     }
 
     tmp = AHBPrescTable[((RCC->CFGR0 & RCC_HPRE) >> 4)];
-
+/*
     if(((RCC->CFGR0 & RCC_HPRE) >> 4) < 8)
     {
         SystemCoreClock /= tmp;
@@ -130,6 +131,7 @@ void SystemCoreClockUpdate (void)
     {
         SystemCoreClock >>= tmp;
     }
+*/
 }
 
 
@@ -140,6 +142,7 @@ void SystemCoreClockUpdate (void)
  *
  * @return  none
  */
+/*
 static void SetSysClock(void)
 {
 #ifdef SYSCLK_FREQ_8MHz_HSI
@@ -156,11 +159,11 @@ static void SetSysClock(void)
     SetSysClockTo_48MHz_HSE();
 #endif
  
- /* If none of the define above is enabled, the HSI is used as System clock.
-  * source (default after reset) 
-	*/ 
-}
+ // If none of the define above is enabled, the HSI is used as System clock.
+ // source (default after reset)
 
+}
+*/
 
 #ifdef SYSCLK_FREQ_8MHz_HSI
 
@@ -375,17 +378,18 @@ static void SetSysClockTo_24MHz_HSE(void)
  *
  * @return  none
  */
+/*
 static void SetSysClockTo_48MHz_HSE(void)
 {
     __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
 
-    /* Close PA0-PA1 GPIO function */
+    // Close PA0-PA1 GPIO function
     RCC->APB2PCENR |= RCC_AFIOEN;
     AFIO->PCFR1 |= (1<<15);
 
     RCC->CTLR |= ((uint32_t)RCC_HSEON);
 
-    /* Wait till HSE is ready and if Time out is reached exit */
+    // Wait till HSE is ready and if Time out is reached exit
     do
     {
         HSEStatus = RCC->CTLR & RCC_HSERDY;
@@ -403,39 +407,40 @@ static void SetSysClockTo_48MHz_HSE(void)
 
     if (HSEStatus == (uint32_t)0x01)
     {
-        /* Flash 0 wait state */
+        // Flash 0 wait state
         FLASH->ACTLR &= (uint32_t)((uint32_t)~FLASH_ACTLR_LATENCY);
         FLASH->ACTLR |= (uint32_t)FLASH_ACTLR_LATENCY_1;
 
-        /* HCLK = SYSCLK = APB1 */
+        // HCLK = SYSCLK = APB1
         RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV1;
 
-        /* PLL configuration: PLLCLK = HSE * 2 = 48 MHz */
+        // PLL configuration: PLLCLK = HSE * 2 = 48 MHz
         RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_PLLSRC));
         RCC->CFGR0 |= (uint32_t)(RCC_PLLSRC_HSE_Mul2);
 
-        /* Enable PLL */
+        // Enable PLL
         RCC->CTLR |= RCC_PLLON;
-        /* Wait till PLL is ready */
+        // Wait till PLL is ready
         while((RCC->CTLR & RCC_PLLRDY) == 0)
         {
         }
-        /* Select PLL as system clock source */
+        // Select PLL as system clock source
         RCC->CFGR0 &= (uint32_t)((uint32_t)~(RCC_SW));
         RCC->CFGR0 |= (uint32_t)RCC_SW_PLL;
-        /* Wait till PLL is used as system clock source */
+        // Wait till PLL is used as system clock source
         while ((RCC->CFGR0 & (uint32_t)RCC_SWS) != (uint32_t)0x08)
         {
         }
     }
     else
     {
-        /*
-         * If HSE fails to start-up, the application will have wrong clock
-     * configuration. User can add here some code to deal with this error
-         */
+
+          //If HSE fails to start-up, the application will have wrong clock
+      //configuration. User can add here some code to deal with this error
+
     }
 }
+*/
 #endif
 
 
