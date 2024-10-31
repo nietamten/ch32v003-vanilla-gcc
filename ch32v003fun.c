@@ -409,7 +409,7 @@ int puts(const char *s)
 
 #define mini_strlen strlen
 
-static int
+ int
 mini_itoa(long value, unsigned int radix, int uppercase, int unsig,
 	 char *buffer)
 {

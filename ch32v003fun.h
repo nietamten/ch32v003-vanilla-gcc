@@ -5,6 +5,10 @@
 
 #include "funconfig.h"
 
+ int
+mini_itoa(long value, unsigned int radix, int uppercase, int unsig,
+	 char *buffer);
+
 /*****************************************************************************
 	CH32V003 BASICS
 

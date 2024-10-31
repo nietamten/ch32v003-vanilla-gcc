@@ -1,0 +1,2 @@
+include ../../common_build.ninja
+build main.elf: ccelf main.c
