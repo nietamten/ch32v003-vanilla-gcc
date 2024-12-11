@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <ch32v003fun.h>
 
+#include <ch32v00x_usart.h>
 int errno;
 
 int mini_vsnprintf(char *buffer, unsigned int buffer_len, const char *fmt, va_list va);
@@ -1387,7 +1388,7 @@ void poll_input()
 //   b7 = is a "printf" waiting?
 //   b0..b3 = # of bytes in printf (+4).  (5 or higher indicates a print of some kind)
 //     note: if b7 is 0 in reply, but b0..b3 have >=4 then we received data from host.
-
+#ifdef DEBUG_INTF_PRINTF
 int _write(int fd, const char *buf, int size)
 {
 	char buffer[4] = { 0 };
@@ -1448,6 +1449,27 @@ int putchar(int c)
 	*DMDATA0 = 0x85 | ((const char)c<<8);
 	return 1;
 }
+#else
+int _write(int fd, const char *buf, int size)
+{
+	for(uint8_t i=0;i<size;i++){
+		while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET){};
+			USART_SendData(USART1, buf[i]);
+	}	
+	
+	return size;
+
+}
+
+// single to debug intf
+int putchar(int c)
+{
+	while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET){};
+		USART_SendData(USART1, c);
+	return 1;
+}	
+#endif
+
 
 void SetupDebugPrintf()
 {
