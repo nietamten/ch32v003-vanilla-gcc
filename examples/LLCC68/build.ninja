@@ -1,0 +1,3 @@
+include ../../common_build.ninja
+cflags = $cflags -I ../../libs/llcc68/example/ -I ../../libs/llcc68/interface -I ../../libs/llcc68/src ../../libs/llcc68/src/driver_llcc68.c ../../libs/llcc68/example/driver_llcc68_lora.c ../../libs/llcc68/interface/driver_llcc68_interface_template.c
+build main.elf: ccelf main.c
